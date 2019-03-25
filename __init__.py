@@ -1,1 +1,1 @@
-from totalrecall import recall
+from chronomancy import arcane_recall

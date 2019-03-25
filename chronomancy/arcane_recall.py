@@ -36,7 +36,7 @@ def arcane_recall(calling_frame, target_argument_pos=0):
     BUT, that only really works for functions.  It doesn't work for class instance properties, not in any way that
     is clean, intuitive to use, and doesn't require the user to do more work than they should have to.
 
-    What we really want is something that can be totally dynamic and figure out everything for us.
+    What we really want is something that can be completely dynamic and figure out everything for us.
 
     That's what this method is for.  It does all of the magic for you of determining the if what we need to recall
     is a class method (which needs to be called using parentheses), or a class instance property.
@@ -60,7 +60,7 @@ def arcane_recall(calling_frame, target_argument_pos=0):
     calling_locals = calling_frame.frame.f_locals
     target_call = arguments.search(calling_code)[0].strip('\\(').strip('\\)').split(', ')[target_argument_pos]
 
-    # Get a list of the total dot notation call chain from the calling frames method argument list
+    # Get a list of the complete dot notation call chain from the calling frames method argument list
     target_call_attrs = target_call.split('.')
 
     # Reverse the call chain so we can work from the logical start point since we will never have any idea of what to expect
