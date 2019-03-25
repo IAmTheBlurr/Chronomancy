@@ -12,12 +12,12 @@ setuptools.setup(
     long_description=long_description,
     long_description_content_type="text/markdown",
     classifiers=[
-        'Intended Audience :: Developers'
-        'License :: OSI Approved :: MIT License'
-        'Operating System :: MacOS'
-        'Operating System :: Microsoft :: Windows'
-        'Operating System :: POSIX :: Linux'
-        'Programming Language :: Python :: 3.7'
+        'Intended Audience :: Developers',
+        'License :: OSI Approved :: MIT License',
+        'Operating System :: MacOS',
+        'Operating System :: Microsoft :: Windows',
+        'Operating System :: POSIX :: Linux',
+        'Programming Language :: Python :: 3.7',
         'Topic :: Software Development :: Libraries :: Python Modules'
     ],
     packages=setuptools.find_packages(),
