@@ -52,13 +52,16 @@ def total_recall(calling_frame):
         # Is the command a class or a callable object within the current level object we're inspecting?
         if inspect.isclass(type(getattr(current_level_object, command))) or callable(getattr(current_level_object, command)):
             # If so, store the reference to the command as the new current level object and keep digging.
-            current_level_object = command
+            current_level_object = getattr(current_level_object, command)
         else:
             # Than the current level object must be the parent to our prime target, return the value.
             return getattr(current_level_object, prime_target_id)
 
     # If we're here then we've drilled down to the bottom and we can recall the original calling frames argument.
-    return getattr(current_level_object, prime_target_id)()
+    if callable(getattr(current_level_object, prime_target_id)):
+        return getattr(current_level_object, prime_target_id)()
+    else:
+        return getattr(current_level_object, prime_target_id)
 
 
 def total_stack_recall(stack, notation_chain):
