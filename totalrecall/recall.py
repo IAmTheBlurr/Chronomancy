@@ -42,10 +42,6 @@ def total_recall(calling_frame):
     # Store the reference to the top level object that we need to access
     top_level_object = calling_frame.frame.f_locals[top_level_target_id]
 
-    # Check to see if the top level object has as a property our target object and return it's value if so.
-    if inspect.isclass(type(top_level_object)) and hasattr(top_level_object, prime_target_id):
-        return getattr(top_level_object, prime_target_id)()
-
     # If we've gotten this far we now need to traverse dot notation chain to drill down into the object references
     current_level_object = top_level_object
     for index, command in enumerate(dot_notation_chain):
