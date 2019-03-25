@@ -36,7 +36,7 @@ class TestRecall(TestCase):
         while timeout < self.test.max_timeout:
             if not current == expected:
                 sleep(sleep_time)
-                current = recall.total_recall(calling_frame)
+                current = recall.arcane_recall(calling_frame)
                 print('Expected: {0}, Found: {1}'.format(expected, current))
                 timeout += sleep_time
             else:

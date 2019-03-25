@@ -3,13 +3,62 @@ import inspect
 import re
 
 
-def total_recall(calling_frame):
+def arcane_recall(calling_frame, target_argument_pos=0):
+    """
+    This is some super sneaky shit.
+
+    And I know!  I know!  "You're not supposed to mess with the stack, it's a bad idea, there be dragons!!!"
+
+    Blah blah blah.
+
+    Look!  If you're not willing to push some limits while being as mindful as you can be, you're never going
+    to get ahead in life.  You already know this, so stop being such a baby!  We have frontiers to cross and
+    dragons to slay!
+
+    With that said, here's what I'm doing (currently).
+
+    Let's say that you're calling a method which is taking another method as an input parameter.
+
+    The return value of the input parameter method is acquired first and then passed into the scope of
+    the calling method.
+
+    Once the returned value of the input parameter method is calculated and passed into the calling method's
+    scope, it is it's own thing in memory.  Whatever that value is, that's the only value it will ever be and
+    it does not contain within it any knowledge of what originally created (returned) it ancestrally.
+
+    So, one might ask, how can you find out what created/returned the value that was passed in to the calling
+    method from the input parameter method?
+
+    And, more importantly, how can you re-call/re-access the object which gave us the value passed into our
+    calling function?
+
+    Yes, you could simply pass in the pointer to the method which you might want to re-call and that would be easy,
+    BUT, that only really works for functions.  It doesn't work for class instance properties, not in any way that
+    is clean, intuitive to use, and doesn't require the user to do more work than they should have to.
+
+    What we really want is something that can be totally dynamic and figure out everything for us.
+
+    That's what this method is for.  It does all of the magic for you of determining the if what we need to recall
+    is a class method (which needs to be called using parentheses), or a class instance property.
+
+    Furthermore, if what we want to recall is at the end of a dot-notation chain, this method will do what it
+    needs to do to traverse the objects in this notation chain within the calling frames' local scope until it
+    gets to the bottom of the chain in order to call/access the target.
+
+    Args:
+        calling_frame (Any):
+        target_argument_pos (int):
+
+    Returns:
+        The a new return value of the argument passed in the method from the calling frame.
+
+    """
     arguments = re.compile('\\(.*\\)')
 
     # The setup to gain access to the calling frames method call.
     calling_code = calling_frame.code_context[0].strip('\n')
     calling_locals = calling_frame.frame.f_locals
-    target_call = arguments.search(calling_code)[0].strip('\\(').strip('\\)').split(', ')[0]
+    target_call = arguments.search(calling_code)[0].strip('\\(').strip('\\)').split(', ')[target_argument_pos]
 
     # Get a list of the total dot notation call chain from the calling frames method argument list
     target_call_attrs = target_call.split('.')
@@ -58,11 +107,3 @@ def total_recall(calling_frame):
         return getattr(current_level_object, prime_target_id)()
     else:
         return getattr(current_level_object, prime_target_id)
-
-
-def total_stack_recall(stack, notation_chain):
-    # 1. Loop through stack frames to find the reference to the leading object in the notation chain (use is).
-    # 2. When you find it, get a reference to it.
-    # 3. Begin looping through the notation chain checking for hasattr and creating a new pointers.
-    # 4. Keep going down until you get to the final notation chain link and call it or use getattr
-    pass
