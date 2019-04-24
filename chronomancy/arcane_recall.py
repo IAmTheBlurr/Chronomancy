@@ -91,6 +91,9 @@ def arcane_recall(calling_frame, target_argument_pos=0):
     # Store the reference to the top level object that we need to access
     top_level_object = calling_frame.frame.f_locals[top_level_target_id]
 
+    # Reverse the dot.notation chain so it's in the correct order after processing.
+    dot_notation_chain.reverse()
+
     # If we've gotten this far we now need to traverse dot notation chain to drill down into the object references
     current_level_object = top_level_object
     for index, command in enumerate(dot_notation_chain):
