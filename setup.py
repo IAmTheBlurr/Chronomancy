@@ -5,7 +5,7 @@ with open("README.md", "r") as file:
 
 setuptools.setup(
     name='Chronomancy',
-    version='0.0.1',
+    version='0.0.2',
     author='Jonathan Craig',
     author_email='blurr@iamtheblurr.com',
     description="The power of Time itself, for Python",
