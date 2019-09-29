@@ -19,7 +19,8 @@ def arcane_recall(calling_frame, target_argument_pos=0):
 
     Look!  If you're not willing to push some limits while being as mindful as you can be, you're never going
     to get ahead in life.  You already know this, so stop being such a baby!  We have frontiers to cross and
-    dragons to slay!
+    dragons to slay so we can extra the value out of the chaos we face in order to return to our ordered
+    cultures with the gold!
 
     With that said, here's what I'm doing (currently).
 
@@ -62,9 +63,27 @@ def arcane_recall(calling_frame, target_argument_pos=0):
     arguments = re.compile('\\(.*\\)')
 
     # The setup to gain access to the calling frames method call.
-    calling_code = calling_frame.code_context[0].strip('\n')
+    # Remove '\n' and leading/tailing whitespaces from the code that was called.
+    calling_code = calling_frame.code_context[0].strip('\n').strip()
+    # Get a reference the calling frame so we can inspect it for our calling code
     calling_locals = calling_frame.frame.f_locals
-    target_call = arguments.search(calling_code)[0].strip('\\(').strip('\\)').split(', ')[target_argument_pos]
+
+    # We want to handle getting the true target call differently if we're explicitly defining the target argument position
+    if not target_argument_pos:
+        target_call = ', '.join(arguments.search(calling_code)[0].strip('\\(').strip('\\)').split(', ')[:-1])
+    else:
+        # Get a list of the argument components that we will deconstruct and combine against soon
+        target_call_list = arguments.search(calling_code)[0].strip('\\(').strip('\\)').split(', ')
+
+        # Make sure that the target_arg_pos string is removed if it exists (probably does if we're here)
+        if 'target_arg_pos' in target_call_list[-1]:
+            del(target_call_list[-1])
+
+        # Delete all elements of our target_call_list that are below our target_argument_pos value
+        del(target_call_list[:target_argument_pos])
+
+        # Rejoin the call list to give us our final value.
+        target_call = ', '.join(target_call_list)
 
     # Get a list of the complete dot notation call chain from the calling frames method argument list
     target_call_attrs = target_call.split('.')
