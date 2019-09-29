@@ -3,6 +3,12 @@ import inspect
 import re
 
 
+class ArcaneRecall(object):
+    def __init__(self, calling_frame, target_argument_pos=0):
+        self.calling_frame = calling_frame
+        self.target_argument_pos = target_argument_pos
+
+
 def arcane_recall(calling_frame, target_argument_pos=0):
     """
     This is some super sneaky shit.
