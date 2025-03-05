@@ -23,7 +23,7 @@ def arcane_recall(calling_frame, target_argument_pos=0):
     the calling method.
 
     Once the returned value of the input parameter method is calculated and passed into the calling method's
-    scope, it is it's own thing in memory.  Whatever that value is, that's the only value it will ever be and
+    scope, it is its own thing in memory.  Whatever that value is, that's the only value it will ever be and
     it does not contain within it any knowledge of what originally created (returned) it ancestrally.
 
     So, one might ask, how can you find out what created/returned the value that was passed in to the calling
@@ -38,7 +38,7 @@ def arcane_recall(calling_frame, target_argument_pos=0):
 
     What we really want is something that can be completely dynamic and figure out everything for us.
 
-    That's what this method is for.  It does all of the magic for you of determining the if what we need to recall
+    That's what this method is for.  It does all the magic for you of determining the if what we need to recall
     is a class method (which needs to be called using parentheses), or a class instance property.
 
     Furthermore, if what we want to recall is at the end of a dot-notation chain, this method will do what it
@@ -50,7 +50,7 @@ def arcane_recall(calling_frame, target_argument_pos=0):
         target_argument_pos (int):
 
     Returns:
-        The a new return value of the argument passed in the method from the calling frame.
+        The new return value of the argument passed in the method from the calling frame.
 
     """
     arguments = re.compile('\\(.*\\)')
@@ -102,7 +102,7 @@ def arcane_recall(calling_frame, target_argument_pos=0):
             # If so, store the reference to the command as the new current level object and keep digging.
             current_level_object = getattr(current_level_object, command)
         else:
-            # Than the current level object must be the parent to our prime target, return the value.
+            # Then the current level object must be the parent to our prime target, return the value.
             return getattr(current_level_object, prime_target_id)
 
     # If we're here then we've drilled down to the bottom and we can recall the original calling frames argument.
