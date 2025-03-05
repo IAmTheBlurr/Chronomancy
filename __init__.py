@@ -1,1 +1,1 @@
-from chronomancy import arcane_recall
+""" This module is the main module for the chronomancy package. """
