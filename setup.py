@@ -1,11 +1,11 @@
 import setuptools
 
-with open("README.md", "r") as file:
+with open("README.md") as file:
     long_description = file.read()
 
 setuptools.setup(
     name='Chronomancy',
-    version='0.0.2',
+    version='0.0.3',
     author='Jonathan Craig',
     author_email='blurr@iamtheblurr.com',
     description="The power of Time itself, for Python",
