@@ -8,25 +8,53 @@ import chronomancy
 
 
 class Test(object):
+    """ A simple class to test the arcane_recall function. """
     def __init__(self):
         self.number = 10
         self.max_timeout = 100
 
     @property
-    def rand_property(self):
+    def rand_property(self) -> int:
+        """
+        Randomly returns a number between 1 and 10.
+
+        Returns:
+            int: A random number between 1 and 10.
+
+        """
         return random.choice([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
 
     @staticmethod
-    def rand_method():
+    def rand_method() -> int:
+        """
+        Randomly returns a number between 1 and 10.
+
+        Returns:
+            int: A random number between 1 and 10.
+
+        """
         return random.choice([1, 2, 3, 4, 5, 6, 7, 8, 9, 10])
 
 
 class TestRecall(TestCase):
 
     def setUp(self):
+        """ Setup the test class instance. """
         self.test = Test()
 
-    def becomes_expected(self, current, expected, target_arg_pos=0):
+    def becomes_expected(self, current_value, expected_value, target_arg_pos: int = 0) -> bool:
+        """
+        A helper function to check if the current value becomes the expected value.
+
+        Args:
+            current_value (Any): The current value.
+            expected_value (Any): The expected value.
+            target_arg_pos (int): The target argument position.
+
+        Returns:
+            bool: True if the current value becomes the expected value, False otherwise.
+
+        """
         calling_frame = inspect.stack()[1]
         sleep_time = 0.25
         timeout = 0
@@ -34,10 +62,10 @@ class TestRecall(TestCase):
         found_expected = False
 
         while timeout < self.test.max_timeout:
-            if not current == expected:
+            if current_value != expected_value:
                 sleep(sleep_time)
-                current = chronomancy.arcane_recall(calling_frame, target_argument_pos=target_arg_pos)
-                print('Expected: {0}, Found: {1}'.format(expected, current))
+                current_value = chronomancy.arcane_recall(calling_frame, target_argument_pos=target_arg_pos)
+                print('Expected: {0}, Found: {1}'.format(expected_value, current_value))
                 timeout += sleep_time
             else:
                 found_expected = True
